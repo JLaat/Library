@@ -20,10 +20,10 @@ function Book(title, author, pages, hasRead) {
 
 // Methods.
 function addBookToLibrary() {
-    let title = window.prompt("Book title: ");
-    let author = window.prompt("Books author: ");
-    let pages =  window.prompt("Pages: ");
-    let haveRead = window.prompt("Have been read");
+    let title = document.getElementById("title").value;
+    let author = document.getElementById("author").value;
+    let pages =  document.getElementById("Pages").value;
+    let haveRead = document.getElementById("read").checked;
 
     libraryBooks.push(new Book(title, author, pages, haveRead));
 }
@@ -46,6 +46,20 @@ function displayAllBooks () {
     }
 }
 
+// Add new book into dom
+const displayNewBook = () => {
+    let table = document.querySelector("tbody");
+    let row = document.createElement("tr");
+    let book = libraryBooks[libraryBooks.length -1];    
+
+    for (let j in book){
+        let cellData = document.createElement("td");
+        cellData.appendChild(document.createTextNode(book[j]));
+        row.appendChild(cellData);
+    }
+    table.appendChild(row);
+}
+
 
 
 let lotr = new Book("Lord of the Rings", "J.R.R Tolkien", 295, false);
@@ -57,4 +71,11 @@ let kekkonen = new Book("MeNaiset", "Pirkko-Liisa", 40, true);
 libraryBooks.push(lotr, nonnii, kekkonen);
 
 displayAllBooks();
+
+
+// Add eventListener for new book button
+document.querySelector(".btn-newBook").addEventListener("click", () => {
+    addBookToLibrary();
+    displayNewBook();
+})
 
